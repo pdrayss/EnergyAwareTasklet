@@ -2,6 +2,7 @@ package logic;
 
 
 import enums.ResultMode;
+import main.ResultList;
 import main.Tasklet;
 import main.TaskletBundle;
 import main.TaskletParameterList;
@@ -9,10 +10,11 @@ import main.TaskletResult;
 import main.TaskletResultListener;
 import main.TaskletResultPool;
 import main.TaskletResults;
+import main.WrongDataTypeException;
 
-public class ProcessorLoad {
+public class Primes {
 	
-	private static String pathToCMMFile = "primes.cmm";
+	private static String pathToCMMFile = "CMMAppCode/primes2.cmm";
 
 	public static void main(String[] args) {
 		//testPrimes();
@@ -28,7 +30,14 @@ public class ProcessorLoad {
 		t.start(1);
 		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
 		System.out.println(results.size());
-		
+		ResultList resultsList = results.get(1);
+		try {
+			int result = resultsList.getInteger(0);
+			System.out.println("Result of primes: " + result + ".");
+		} catch (WrongDataTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void testPrimes() {
