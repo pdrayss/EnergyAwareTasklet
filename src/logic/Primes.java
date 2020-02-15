@@ -22,20 +22,23 @@ public class Primes {
 	}
 	
 	public static void primes() {
+		
+		int lower = 1;
+		int upper = 20000;
+		
 		Tasklet.setNumberOfRuns(1);
 		Tasklet t = new Tasklet(pathToCMMFile);
-		t.addInt(1);
-		t.addInt(20000);
-		System.out.println("Tasklet ready");
+		t.addInt(lower);
+		t.addInt(upper);
+		System.out.println("Tasklet ready...");
 		t.start(1);
 		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
 		System.out.println(results.size());
 		ResultList resultsList = results.get(1);
 		try {
 			int result = resultsList.getInteger(0);
-			System.out.println("Result of primes: " + result + ".");
+			System.out.println("Number of primes between " + lower +" and " + upper +": " + result);
 		} catch (WrongDataTypeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
