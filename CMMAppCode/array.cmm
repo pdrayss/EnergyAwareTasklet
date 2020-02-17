@@ -1,13 +1,18 @@
-int current;
+int current, counter;
 int[70000000] array;
 
 current := 0;
+counter := 0;
 
 while(current < 70000000){
-	array[current] := 42;
+	array[current] := current;
 	current := current + 1;
+	
+	if(current % 42 = 0){
+		counter := counter +1;
+	}
+	
 }
 
-
-
 <<current;
+<<counter;

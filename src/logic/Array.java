@@ -30,8 +30,10 @@ public class Array {
 		System.out.println(results.size());
 		ResultList resultsList = results.get(1);
 		try {
-			int result = resultsList.getInteger(0);
-			System.out.println("Array filled with a size of: " + result);
+			int size = resultsList.getInteger(0);
+			int numberCount = resultsList.getInteger(1);
+			System.out.println("Array filled with a size of: " + size);
+			System.out.println("Array countains numbers which can be diveded by 42 exactly: " + numberCount + " times");
 		} catch (WrongDataTypeException e) {
 			e.printStackTrace();
 		}
