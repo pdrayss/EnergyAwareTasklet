@@ -16,8 +16,8 @@ import main.WrongDataTypeException;
 public class Primes {
 	
 	private static String pathToCMMFile = "CMMAppCode/primes2.cmm";
-	private static int bundelSize = 20;
-	private static int iterations = 20;
+	private static int bundelSize = 16;
+	private static int iterations = 16;
 
 	public static void main(String[] args) {
 		//primes();
@@ -50,6 +50,7 @@ public class Primes {
 	public static void primesBundle() {
 		TaskletBundle t = TaskletBundle.fromFile(pathToCMMFile);
 
+		Tasklet.setNumberOfRuns(bundelSize);
 		for (int i = 0; i < bundelSize; i++) {
 			TaskletParameterList p = t.getNewParameterList();
 			p.addInt("low", 1);
@@ -57,6 +58,7 @@ public class Primes {
 			t.addParameterizedRun(p);
 		}
 		t.start();
+		
 		TaskletResultPool allResults = t.waitForAllResults();
 		System.out.println("Primes Test - Tasklets started, now waiting for all results...");
 		System.out.println("Allresults keyset: " + allResults.keySet());
@@ -77,20 +79,29 @@ public class Primes {
 		int lower = 1;
 		int upper = 20000;
 		
-		Tasklet t = new Tasklet(pathToCMMFile);
 		Tasklet.setNumberOfRuns(iterations);
-		t.addInt(lower);
-		t.addInt(upper);
-		System.out.println("Tasklet ready...");
-		t.start(1);
+		for (int i = 0; i < iterations; i++) {
+			Tasklet t = new Tasklet(pathToCMMFile);
+			t.setQoCReliable();
+			t.addInt(lower);
+			t.addInt(upper);
+			t.start(i);
+		}
+		
 		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
-		System.out.println(results.size());
-		ResultList resultsList = results.get(1);
-		try {
-			int result = resultsList.getInteger(0);
-			System.out.println("Number of primes between " + lower +" and " + upper +": " + result);
-		} catch (WrongDataTypeException e) {
-			e.printStackTrace();
+		System.out.println("Primes Iterations - Results received: " + results.size());
+		
+
+		int result[] = new int[results.size()];
+		int i = 0;
+		for (ResultList resultList : results.tResults) {
+			try {			
+				result[i] = resultList.getInteger(0);
+				System.out.println("Getting result No. " + i + ": " + resultList.getInteger(0));
+				i++;
+			} catch (WrongDataTypeException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
