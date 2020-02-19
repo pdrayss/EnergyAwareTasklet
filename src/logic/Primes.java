@@ -2,6 +2,7 @@ package logic;
 
 
 import enums.ResultMode;
+import execution.TaskletBundleAwaiter;
 import main.ResultList;
 import main.Tasklet;
 import main.TaskletBundle;
@@ -15,10 +16,13 @@ import main.WrongDataTypeException;
 public class Primes {
 	
 	private static String pathToCMMFile = "CMMAppCode/primes2.cmm";
+	private static int bundelSize = 20;
+	private static int iterations = 20;
 
 	public static void main(String[] args) {
-		//testPrimes();
-		primes();
+		//primes();
+		//primesBundle();
+		primesIterarions();
 	}
 	
 	public static void primes() {
@@ -26,8 +30,8 @@ public class Primes {
 		int lower = 1;
 		int upper = 20000;
 		
-		Tasklet.setNumberOfRuns(1);
 		Tasklet t = new Tasklet(pathToCMMFile);
+		Tasklet.setNumberOfRuns(1);
 		t.addInt(lower);
 		t.addInt(upper);
 		System.out.println("Tasklet ready...");
@@ -43,14 +47,10 @@ public class Primes {
 		}
 	}
 	
-	public static void testPrimes() {
-		TaskletBundle t = TaskletBundle.fromFile("primes.cmm");
-		t.setTimeout(3000000);
+	public static void primesBundle() {
+		TaskletBundle t = TaskletBundle.fromFile(pathToCMMFile);
 
-		t.getQoCList().setReliable();
-
-		for (int i = 0; i < 2; i++) {
-
+		for (int i = 0; i < bundelSize; i++) {
 			TaskletParameterList p = t.getNewParameterList();
 			p.addInt("low", 1);
 			p.addInt("high", 20000);
@@ -62,8 +62,6 @@ public class Primes {
 		System.out.println("Allresults keyset: " + allResults.keySet());
 
 		for (TaskletResult nextResult : allResults.values()) {
-			// If the Tasklet had a timeout, just skip it. We don't need to
-			// re-run it...
 			if (nextResult.hadTimeout()) {
 				System.out.println("Result had timeout");
 				continue;
@@ -71,6 +69,28 @@ public class Primes {
 //			 for (Object nextPrime : nextResult.getResultItems()) {
 //			 System.out.println("Found Prime Number: " + (int) nextPrime);
 //			 }
+		}
+	}
+	
+	public static void primesIterarions() {
+		
+		int lower = 1;
+		int upper = 20000;
+		
+		Tasklet t = new Tasklet(pathToCMMFile);
+		Tasklet.setNumberOfRuns(iterations);
+		t.addInt(lower);
+		t.addInt(upper);
+		System.out.println("Tasklet ready...");
+		t.start(1);
+		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
+		System.out.println(results.size());
+		ResultList resultsList = results.get(1);
+		try {
+			int result = resultsList.getInteger(0);
+			System.out.println("Number of primes between " + lower +" and " + upper +": " + result);
+		} catch (WrongDataTypeException e) {
+			e.printStackTrace();
 		}
 	}
 

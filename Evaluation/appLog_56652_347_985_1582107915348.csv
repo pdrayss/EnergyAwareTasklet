@@ -1,0 +1,5 @@
+Role;MeasurePoint;LocalIP(String);IP(Zero);Port;AppIdentifier;Session;Trial;ResultSize;Serial;ReplicationID;Subserial;ExecutingHost;IntermediateComp;FinalComp;RetryCounter;HeartBeatCounter;HotRetryCounter;CurrentTime;SystemStart;Duration
+0;-2;0.0.0.0;0;0;1321167326;347;985;0;0;0;0;0.0.0.0;0;0;0;0;0;1582107915348;1582107915348;0;
+0;0;0.0.0.0;0;56652;1321167326;347;985;0;1;0;0;0.0.0.0;0;0;0;0;0;1582107915349;1582107915348;1;
+0;15;127.0.0.1;0;56652;1321167326;347;985;10;1;0;1;127.0.0.1;0;8082;0;0;0;1582107923437;1582107915348;8089;
+0;-1;0.0.0.0.;0;56652;1321167326;347;985;0;0;0;0;0.0.0.0;0;0;0;0;0;1582107923438;1582107915348;8090;
