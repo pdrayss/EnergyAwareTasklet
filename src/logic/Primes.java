@@ -16,6 +16,7 @@ import main.WrongDataTypeException;
 public class Primes {
 	
 	private static String pathToCMMFile = "CMMAppCode/primes2.cmm";
+	private static String pathToCMMFileIt = "CMMAppCode/primes3.cmm";
 	private static int bundelSize = 16;
 	private static int iterations = 16;
 
@@ -81,7 +82,7 @@ public class Primes {
 		
 		Tasklet.setNumberOfRuns(iterations);
 		for (int i = 0; i < iterations; i++) {
-			Tasklet t = new Tasklet(pathToCMMFile);
+			Tasklet t = new Tasklet(pathToCMMFileIt);
 			t.setQoCReliable();
 			t.addInt(lower);
 			t.addInt(upper);
