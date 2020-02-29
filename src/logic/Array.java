@@ -22,7 +22,7 @@ public class Array {
 		fillArray1gb();
 	}
 	
-	public static void fillArray() {
+	private static void fillArray() {
 		
 		Tasklet.setNumberOfRuns(1);
 		Tasklet t = new Tasklet(pathToCMMFile);
@@ -41,7 +41,7 @@ public class Array {
 		}
 	}
 	
-	public static void fillArray1gb() {
+	private static void fillArray1gb() {
 		
 		Tasklet.setNumberOfRuns(1);
 		Tasklet t = new Tasklet(pathToCMMFile1gb); 

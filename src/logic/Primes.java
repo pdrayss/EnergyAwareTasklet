@@ -22,11 +22,11 @@ public class Primes {
 
 	public static void main(String[] args) {
 		//primes();
-		//primesBundle();
-		primesIterarions();
+		primesBundle();
+		//primesIterarions();
 	}
 	
-	public static void primes() {
+	private static void primes() {
 		
 		int lower = 1;
 		int upper = 20000;
@@ -48,10 +48,11 @@ public class Primes {
 		}
 	}
 	
-	public static void primesBundle() {
+	private static void primesBundle() {
 		TaskletBundle t = TaskletBundle.fromFile(pathToCMMFile);
+		t.setTimeout(3000000);
+		t.getQoCList().setReliable();
 
-		Tasklet.setNumberOfRuns(bundelSize);
 		for (int i = 0; i < bundelSize; i++) {
 			TaskletParameterList p = t.getNewParameterList();
 			p.addInt("low", 1);
@@ -75,7 +76,7 @@ public class Primes {
 		}
 	}
 	
-	public static void primesIterarions() {
+	private static void primesIterarions() {
 		
 		int lower = 1;
 		int upper = 20000;
