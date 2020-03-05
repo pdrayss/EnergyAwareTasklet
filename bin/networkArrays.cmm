@@ -1,0 +1,36 @@
+int[10000000] importArrayA;
+int[10000000] importArrayB;
+int[10000000] importArrayC;
+int[10000000] importArrayD;
+int[10000000] importArrayE;
+int current, counter;
+
+>>importArrayA;
+>>importArrayB;
+>>importArrayC;
+>>importArrayD;
+>>importArrayE;
+
+current := 0;
+counter := 0; 
+
+while(current < 10000000){
+	if(importArrayA[current] % 42 = 0){
+		counter := counter +1;
+	}
+	if(importArrayB[current] % 42 = 0){
+		counter := counter +1;
+	}
+	if(importArrayC[current] % 42 = 0){
+		counter := counter +1;
+	}
+	if(importArrayD[current] % 42 = 0){
+		counter := counter +1;
+	}
+	if(importArrayE[current] % 42 = 0){
+		counter := counter +1;
+	}	
+	current := current + 1;	
+}
+
+<<counter;

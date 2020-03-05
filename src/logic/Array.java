@@ -1,16 +1,8 @@
 package logic;
 
-
-import enums.ResultMode;
-import main.ResultList;
 import main.Tasklet;
-import main.TaskletBundle;
 import main.TaskletParameterList;
 import main.TaskletResult;
-import main.TaskletResultListener;
-import main.TaskletResultPool;
-import main.TaskletResults;
-import main.WrongDataTypeException;
 
 public class Array {
 	
@@ -24,39 +16,33 @@ public class Array {
 	
 	private static void fillArray() {
 		
-		Tasklet.setNumberOfRuns(1);
-		Tasklet t = new Tasklet(pathToCMMFile);
+		Tasklet t = Tasklet.fromFile(pathToCMMFile);
+		TaskletParameterList p = t.getParameterList();
+		p.addInt("current", 0);
+		t.setParameterList(p);
 		System.out.println("Tasklet ready..."); //consumers around ~400 Mb of memory per array
-		t.start(1);
-		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
-		System.out.println(results.size());
-		ResultList resultsList = results.get(1);
-		try {
-			int size = resultsList.getInteger(0);
-			int numberCount = resultsList.getInteger(1);
-			System.out.println("Array filled with a size of: " + size);
-			System.out.println("Array countains numbers which can be diveded by 42 exactly: " + numberCount + " times");
-		} catch (WrongDataTypeException e) {
-			e.printStackTrace();
-		}
+		t.start();
+		
+		TaskletResult allResults = t.waitForResult();
+				
+		System.out.println("Arrays - Results received: " + allResults.size());
+		System.out.println("Array filled with a size of: " + allResults.getInt(0));
+		System.out.println("Array countains numbers which can be diveded by 42 exactly: " + allResults.getInt(1) + " times");
 	}
 	
 	private static void fillArray1gb() {
 		
-		Tasklet.setNumberOfRuns(1);
-		Tasklet t = new Tasklet(pathToCMMFile1gb); 
+		Tasklet t = Tasklet.fromFile(pathToCMMFile1gb);
+		TaskletParameterList p = t.getParameterList();
+		p.addInt("current", 0);
+		t.setParameterList(p);
 		System.out.println("Tasklet ready...");  //consumers around ~1100 Mb of memory per array
-		t.start(1);
-		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
-		System.out.println(results.size());
-		ResultList resultsList = results.get(1);
-		try {
-			int size = resultsList.getInteger(0);
-			int numberCount = resultsList.getInteger(1);
-			System.out.println("Array filled with a size of: " + size);
-			System.out.println("Array countains numbers which can be diveded by 42 exactly: " + numberCount + " times");
-		} catch (WrongDataTypeException e) {
-			e.printStackTrace();
-		}
+		t.start();
+		
+		TaskletResult allResults = t.waitForResult();
+		
+		System.out.println("Arrays - Results received: " + allResults.size());
+		System.out.println("Array filled with a size of: " + allResults.getInt(0));
+		System.out.println("Array countains numbers which can be diveded by 42 exactly: " + allResults.getInt(1) + " times");
 	}
 }

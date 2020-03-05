@@ -1,17 +1,15 @@
-int current, counter;
+int counter;
+int current;
 int[100000000] array;
 
-current := 0;
+>>current;
 counter := 0;
 
 while(current < 100000000){
-	array[current] := current;
-	current := current + 1;
-	
-	if(current % 42 = 0){
+	if(array[current] % 42 = 0){
 		counter := counter +1;
 	}
-	
+	current := current + 1;	
 }
 
 <<current;

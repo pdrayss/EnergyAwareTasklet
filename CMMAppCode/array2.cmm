@@ -3,7 +3,7 @@ int[100000000] aArray;
 int[100000000] bArray;
 int[100000000] cArray;
 
-current := 0;
+>>current;
 counter := 0;
 
 while(current < 100000000){

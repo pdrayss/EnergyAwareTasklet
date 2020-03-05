@@ -2,11 +2,9 @@ package logic;
 
 import java.util.Random;
 
-import enums.ResultMode;
-import main.ResultList;
 import main.Tasklet;
-import main.TaskletResults;
-import main.WrongDataTypeException;
+import main.TaskletParameterList;
+import main.TaskletResult;
 
 public class Network {
 	
@@ -26,25 +24,19 @@ public class Network {
 		int[] array5 = random.ints(10000000, 10,10000000).toArray();
 		
 		//networkArrays.cmm returns number of entries being able to divide by 42
-		Tasklet t = new Tasklet(pathToCMMFile);
-		Tasklet.setNumberOfRuns(1);
-		t.addIntArray(array1);
-		t.addIntArray(array2);
-		t.addIntArray(array3);
-		t.addIntArray(array4);
-		t.addIntArray(array5);
+		Tasklet t = Tasklet.fromFile(pathToCMMFile);
+		TaskletParameterList p = t.getParameterList();
+		p.addIntArray("importArrayA", array1);
+		p.addIntArray("importArrayB", array2);
+		p.addIntArray("importArrayC", array3);
+		p.addIntArray("importArrayD", array4);
+		p.addIntArray("importArrayE", array5);
 		System.out.println("Tasklet ready...");
-		t.start(1);
-		TaskletResults results = Tasklet.getTaskletResults(ResultMode.EVERYTHING);
-		System.out.println("Result size: " + results.size());
-		ResultList resultsList = results.get(1);
-		try {
-			int result = resultsList.getInteger(0);
-			System.out.println("Number of entries being able to devide by 42:  " + result);
-		} catch (WrongDataTypeException e) {
-			e.printStackTrace();
-		}
+		t.start();
+		TaskletResult allResults = t.waitForResult();
 		
+		System.out.println("NetworkArrays - Results received: " + allResults.size());
+		System.out.println("Number of entries being able to devide by 42: " + allResults.getInt(0));		
 	}
 
 }
