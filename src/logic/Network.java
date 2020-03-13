@@ -9,10 +9,22 @@ import main.TaskletResult;
 public class Network {
 	
 	private static String pathToCMMFile = "CMMAppCode/networkArrays.cmm";
-
+	private static int iterationCounter = 10;
+	
 	public static void main(String[] args) {
-		networkArrays();
 
+		
+		for(int i = 0; i < iterationCounter; i++) {
+			networkArrays();			
+		}
+
+	}
+	
+	public static void execute(int iterationCount) {
+		iterationCounter = iterationCount;
+		for(int i = 0; i < iterationCounter; i++) {
+			networkArrays();			
+		}	
 	}
 	
 	private static void networkArrays() {

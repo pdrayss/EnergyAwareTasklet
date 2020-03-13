@@ -8,10 +8,22 @@ public class Array {
 	
 	private static String pathToCMMFile = "CMMAppCode/array.cmm";
 	private static String pathToCMMFile1gb = "CMMAppCode/array2.cmm";
+	private static int iterationCounter = 10;
 
 	public static void main(String[] args) {
 		//fillArray();
-		fillArray1gb();
+
+		for(int i = 0; i < iterationCounter; i++) {
+			fillArray1gb();			
+		}
+	}
+	
+
+	public static void execute(int iterationCount) {
+		iterationCounter = iterationCount;
+		for(int i = 0; i < iterationCounter; i++) {
+			fillArray1gb();			
+		}		
 	}
 	
 	private static void fillArray() {

@@ -11,10 +11,23 @@ public class Primes {
 	
 	private static String pathToCMMFile = "CMMAppCode/primes2.cmm";
 	private static int bundelSize = 16;
+	private static int iterationCounter = 10;
+	private static int resultCounter = 0;
 
 	public static void main(String[] args) {
 		//singlePrimes();
-		primesBundle();
+		
+		for(int i = 0; i < iterationCounter; i++) {
+			primesBundle();			
+		}
+	}
+	
+	public static void execute(int iterationCount, int bundle) {
+		iterationCounter = iterationCount;
+		bundelSize = bundle;
+		for(int i = 0; i < iterationCounter; i++) {
+			primesBundle();			
+		}	
 	}
 	
 	private static void singlePrimes() {
@@ -61,7 +74,13 @@ public class Primes {
 			}
 			else {
 				System.out.println("Number of primes between " + lower +" and " + upper +": " + nextResult.getInt(0));
+				resultCounter++;
 			}
 		}
+		System.out.println("***************************************************");
+		System.out.println("Results processed: " + resultCounter);
+		int pending = iterationCounter * bundelSize - resultCounter;
+		System.out.println("Results pending: " + pending);
+		System.out.println("***************************************************");
 	}
 }
