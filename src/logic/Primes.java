@@ -1,6 +1,8 @@
 package logic;
 
 
+import java.sql.Timestamp;
+
 import main.Tasklet;
 import main.TaskletBundle;
 import main.TaskletParameterList;
@@ -13,6 +15,7 @@ public class Primes {
 	private static int bundelSize = 16;
 	private static int iterationCounter = 10;
 	private static int resultCounter = 0;
+	private static String csvReturn = "";
 
 	public static void main(String[] args) {
 		//singlePrimes();
@@ -22,12 +25,13 @@ public class Primes {
 		}
 	}
 	
-	public static void execute(int iterationCount, int bundle) {
+	public static String execute(int iterationCount, int bundle) {
 		iterationCounter = iterationCount;
 		bundelSize = bundle;
 		for(int i = 0; i < iterationCounter; i++) {
 			primesBundle();			
-		}	
+		}
+		return csvReturn;
 	}
 	
 	private static void singlePrimes() {
@@ -82,5 +86,14 @@ public class Primes {
 		int pending = iterationCounter * bundelSize - resultCounter;
 		System.out.println("Results pending: " + pending);
 		System.out.println("***************************************************");
+		
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		
+		//prepare CSV file output
+		csvReturn = csvReturn.concat(
+					now + ", " + 
+					"lower: " + lower + ", " + 
+					"upper: " + upper + ", " +
+					"run: " + resultCounter + System.lineSeparator());
 	}
 }

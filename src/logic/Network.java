@@ -1,5 +1,6 @@
 package logic;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 import main.Tasklet;
@@ -10,6 +11,8 @@ public class Network {
 	
 	private static String pathToCMMFile = "CMMAppCode/networkArrays.cmm";
 	private static int iterationCounter = 10;
+	private static String csvReturn = "";
+	private static int counter = 0;
 	
 	public static void main(String[] args) {
 
@@ -20,14 +23,19 @@ public class Network {
 
 	}
 	
-	public static void execute(int iterationCount) {
+	public static String execute(int iterationCount) {
 		iterationCounter = iterationCount;
 		for(int i = 0; i < iterationCounter; i++) {
 			networkArrays();			
 		}	
+		
+		return csvReturn;
 	}
 	
 	private static void networkArrays() {
+		
+		counter++;
+		
 		Random random = new Random();
 		int[] array1 = random.ints(10000000, 10,10000000).toArray();
 		int[] array2 = random.ints(10000000, 10,10000000).toArray();
@@ -48,7 +56,17 @@ public class Network {
 		TaskletResult allResults = t.waitForResult();
 		
 		System.out.println("NetworkArrays - Results received: " + allResults.size());
-		System.out.println("Number of entries being able to devide by 42: " + allResults.getInt(0));		
+		System.out.println("Number of entries being able to devide by 42: " + allResults.getInt(0));
+		
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+		
+		//prepare CSV file output
+		csvReturn = csvReturn.concat(
+					now + ", " + 
+					"results: " + allResults.size() + ", " + 
+					"resultCount: " + allResults.getInt(0) + ", " +
+					"iteration: " + counter + System.lineSeparator());
+		
 	}
 
 }
