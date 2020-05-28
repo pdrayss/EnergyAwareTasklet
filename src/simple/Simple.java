@@ -19,7 +19,7 @@ public class Simple {
 
 		//TEST
 		t.getQoCList().setReliable();
-		t.getQoCList().setRemote();
+		//t.getQoCList().setRemote();
 		
 		t.start();
 		

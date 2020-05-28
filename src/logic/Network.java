@@ -52,6 +52,7 @@ public class Network {
 		p.addIntArray("importArrayD", array4);
 		p.addIntArray("importArrayE", array5);
 		System.out.println("Tasklet ready...");
+		t.getQoCList().setRemote();
 		t.start();
 		TaskletResult allResults = t.waitForResult();
 		

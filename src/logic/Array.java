@@ -55,6 +55,7 @@ public class Array {
 		p.addInt("current", 0);
 		t.setParameterList(p);
 		System.out.println("Tasklet ready...");  //consumers around ~1100 Mb of memory per array
+		t.getQoCList().setRemote();
 		t.start();
 		
 		TaskletResult allResults = t.waitForResult();

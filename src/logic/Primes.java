@@ -44,6 +44,7 @@ public class Primes {
 		p.addInt("low", lower);
 		p.addInt("high", upper);
 		t.setParameterList(p);
+		t.getQoCList().setRemote();
 		t.start();
 		
 		TaskletResult allResults = t.waitForResult();
@@ -65,9 +66,13 @@ public class Primes {
 			p.addInt("high", upper);
 			taskletBundle.addParameterizedRun(p);
 		}
+		taskletBundle.getQoCList().setRemote();
+		taskletBundle.getQoCList().setReliable();
 		taskletBundle.start();
 		
 		TaskletResultPool allResults = taskletBundle.waitForAllResults();
+		
+		
 		System.out.println("Primes Test - Tasklets started, now waiting for all results...");
 		System.out.println("Allresults keyset: " + allResults.keySet());
 
